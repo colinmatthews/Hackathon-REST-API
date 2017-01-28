@@ -11,14 +11,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT;
-app.listen(port || 3000, function(){
+app.listen(port || 8000, function(){
     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://admin:admin@ds049935.mlab.com:49935/busdata'); // connect to our database
 
-app.listen(port);
 var Stop = require("./models/stops");
 
 // ROUTES FOR OUR API
