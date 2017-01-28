@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var extendedStopSchema   = new Schema({
-    fid: Number,
+    FID: Number,
     FeatId1: String,
     on_street: String,
     Route_Name:String,

@@ -6,7 +6,7 @@ var app = express();                 // define our app using express
 var request = require('request');
 var fs = require('fs');
 var bodyParser = require('body-parser');
-const busCSV = './csv/Transit_Windsor_Bus_Stops.csv';
+
 const csv = require('csvtojson');
 
 // configure app to use bodyParser()
@@ -24,8 +24,11 @@ mongoose.connect('mongodb://admin:admin@ds049935.mlab.com:49935/busdata'); // co
 
 var Stop = require("./models/stops");
 var ExtendedStop = require("./models/extendedstops");
+var ServiceRequests2016 = require("./models/serviceRequests2016");
 
-const UPLOADBUS = true;
+
+const busCSV = './csv/Transit_Windsor_Bus_Stops.csv';
+const service2016CSV = './csv/AllServiceRequests_2016.csv';
 
 
 
@@ -151,6 +154,7 @@ router.route('/extendedstops')
 
     });
 
+
 router.route('/extendedstops/:extendedstop_id')
 
 
@@ -164,7 +168,41 @@ router.route('/extendedstops/:extendedstop_id')
     });
 
 
+router.route('/servicerequests2016')
 
+    .get(function(req,res){
+
+        ServiceRequests2016.find(function(err,data){
+            if(err){
+                res.send(err);
+            }
+            res.send(data);
+
+
+        });
+
+
+    })
+
+    .post(function(req, res) {
+
+        var serviceRequests = new ServiceRequests2016();
+
+        serviceRequests.ServiceRequestDescription = req.body.ServiceRequestDescription;
+        serviceRequests.Department = req.body.Department;
+        serviceRequests.MethodReceived = req.body.MethodReceived;
+        serviceRequests.CreatedDate = req.body.CreatedDate;
+        serviceRequests.Block = req.body.Block;
+        serviceRequests.Street = req.body.Street;
+
+        serviceRequests.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'ServiceRequest created!' });
+        });
+
+    });
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
@@ -173,13 +211,14 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 
-upload(busCSV,"/extendedstops");
+//upload(busCSV,"/extendedstops");
+upload(service2016CSV,"/servicerequests2016");
 
 function upload(filepath, urlpath){
     csv()
         .fromFile(filepath)
-        .on('json', (function (jsonObj, err) {
-            if (err) {
+        .on('json', (function (jsonObj,err) {
+            if(err){
                 console.log(err);
             }
 
@@ -197,7 +236,6 @@ function upload(filepath, urlpath){
 
         }))
         .on('done', (function (err) {
-
             console.log('end')
         }));
 
