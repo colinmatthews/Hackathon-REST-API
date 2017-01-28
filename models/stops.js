@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 
 var nearbySchema = new Schema({
     name:String,
-    distance:Number
+    distance:Number,
+    left:Boolean
 });
 
 var timeSchema = new Schema({
