@@ -11,8 +11,7 @@ var nearbySchema = new Schema({
 });
 
 var timeSchema = new Schema({
-    time:String,
-    weekend:Boolean
+    time:String
 });
 
 
@@ -24,8 +23,8 @@ var stopSchema   = new Schema({
     x: Number,
     y:Number,
     nearby: [nearbySchema],
-    times:[timeSchema]
-
+    times_weekday:[timeSchema],
+    times_weekend:[timeSchema]
 
 });
 
