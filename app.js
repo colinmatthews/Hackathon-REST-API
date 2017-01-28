@@ -10,7 +10,9 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8000;        // set our port
+app.listen(process.env.PORT || 3000, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://admin:admin@ds049935.mlab.com:49935/busdata'); // connect to our database
