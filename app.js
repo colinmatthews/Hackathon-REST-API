@@ -10,12 +10,13 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.set('port', (process.env.PORT || 5000));
+app.listen(process.env.PORT || 3000, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://admin:admin@ds049935.mlab.com:49935/busdata'); // connect to our database
 
-app.listen(port);
 var Stop = require("./models/stops");
 
 // ROUTES FOR OUR API
