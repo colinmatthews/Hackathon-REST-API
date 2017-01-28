@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.listen(process.env.PORT || 3000);
+app.set('port', (process.env.PORT || 5000));
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://admin:admin@ds049935.mlab.com:49935/busdata'); // connect to our database
