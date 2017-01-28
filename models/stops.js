@@ -10,6 +10,11 @@ var nearbySchema = new Schema({
     distance:Number
 });
 
+var timeSchema = new Schema({
+    time:Number
+});
+
+
 var stopSchema   = new Schema({
     fid: Number,
     name: String,
@@ -17,7 +22,8 @@ var stopSchema   = new Schema({
     at_street: String,
     x: Number,
     y:Number,
-    nearby: [nearbySchema]
+    nearby: [nearbySchema],
+    times:[timeSchema]
 
 
 });
