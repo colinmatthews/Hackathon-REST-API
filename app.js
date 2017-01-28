@@ -53,6 +53,8 @@ router.route('/stops')
         stop.x = req.body.x;
         stop.y = req.body.y;
         stop.nearby = req.body.nearby;
+        stop.times_weekend = req.body.times_weekend;
+        stop.times_weekday = req.body.times_weekday;
 
 
         console.log(req.body.name);
