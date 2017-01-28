@@ -138,7 +138,6 @@ router.route('/extendedstops')
         extendedStop.X = req.body.X;
         extendedStop.Y = req.body.Y;
 
-        console.log(req.body.FID);
 
         // save the bear and check for errors
         extendedStop.save(function(err) {
@@ -148,6 +147,18 @@ router.route('/extendedstops')
             res.json({ message: 'ExtendedStop created!' });
         });
 
+    });
+
+router.route('/extendedstops/:extendedstop_id')
+
+
+    .get(function(req, res) {
+        var params = req.params.extendedstop_id;
+        ExtendedStop.findOne({'FeatId1':params}, function(err, stop) {
+            if (err)
+                res.send(err);
+            res.json(stop);
+        });
     });
 
 
