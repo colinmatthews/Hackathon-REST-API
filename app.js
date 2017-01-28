@@ -25,7 +25,7 @@ mongoose.connect('mongodb://admin:admin@ds049935.mlab.com:49935/busdata'); // co
 var Stop = require("./models/stops");
 var ExtendedStop = require("./models/extendedstops");
 
-const UPLOADBUS = false;
+const UPLOADBUS = true;
 
 
 
@@ -71,7 +71,7 @@ router.route('/stops')
 
         console.log(req.body.name);
 
-        // save the bear and check for errors
+
         stop.save(function(err) {
             if (err)
                 res.send(err);
@@ -142,7 +142,6 @@ router.route('/extendedstops')
         extendedStop.Y = req.body.Y;
 
 
-        // save the bear and check for errors
         extendedStop.save(function(err) {
             if (err)
                 res.send(err);
@@ -174,32 +173,27 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 
-if(UPLOADBUS) {
+upload(busCSV,"/extendedstops");
+
+function upload(filepath, urlpath){
     csv()
-        .fromFile(busCSV)
+        .fromFile(filepath)
         .on('json', (function (jsonObj, err) {
             if (err) {
-                // console.log(err);
+                console.log(err);
             }
 
             var options = {
-                uri: 'http://localhost:8000/api/extendedstops',
+                uri: 'http://localhost:8000/api/'+urlpath,
                 method: 'POST',
                 json: jsonObj
             };
 
             request(options, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    console.log(body.id) // Print the shortened url.
+                    console.log(body);
                 }
             });
-
-
-
-
-
-            // combine csv header row and csv line to a json object
-            // jsonObj.a ==> 1 or 4
 
         }))
         .on('done', (function (err) {
@@ -208,5 +202,8 @@ if(UPLOADBUS) {
         }));
 
 }
+
+
+
 
 
