@@ -8,6 +8,7 @@ var extendedStopSchema   = new Schema({
     fid: Number,
     FeatId1: String,
     on_street: String,
+    Route_Name:String,
     Route_Numb: Number,
     Route_Dire: String,
     Bus_Orient: String,

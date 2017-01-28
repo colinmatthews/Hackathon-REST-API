@@ -25,7 +25,9 @@ mongoose.connect('mongodb://admin:admin@ds049935.mlab.com:49935/busdata'); // co
 var Stop = require("./models/stops");
 var ExtendedStop = require("./models/extendedstops");
 
-const UPLOAD = 0;
+const UPLOADBUS = false;
+
+
 
 //****************
 //
@@ -128,6 +130,7 @@ router.route('/extendedstops')
         extendedStop.FID = req.body.FID;
         extendedStop.FeatId1 = req.body.FeatId1;
         extendedStop.Route_Numb = req.body.Route_Numb;
+        extendedStop.Route_Name = req.body.Route_Name;
         extendedStop.Route_Dire = req.body.Route_Dire;
         extendedStop.Bus_Orient = req.body.Bus_Orient;
         extendedStop.Bus_Stop_I = req.body.Bus_Stop_I;
@@ -171,7 +174,7 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 
-if(UPLOAD == 1 ) {
+if(UPLOADBUS) {
     csv()
         .fromFile(busCSV)
         .on('json', (function (jsonObj, err) {
